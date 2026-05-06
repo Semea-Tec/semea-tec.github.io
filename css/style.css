@@ -285,6 +285,63 @@ body {
   font-style: italic;
 }
 
+/* ---------- Team grid (Quem Somos) ---------- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.2rem 1rem;
+  background: var(--gray-100);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--gray-800);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  border: 1px solid transparent;
+}
+
+.team-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  background: var(--white);
+  border-color: var(--green-300);
+}
+
+.team-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.7rem;
+  border: 3px solid var(--green-100);
+}
+
+.team-card strong {
+  font-size: 1rem;
+  color: var(--green-900);
+  margin-bottom: 0.15rem;
+}
+
+.team-card span {
+  font-size: 0.82rem;
+  color: var(--green-500);
+  font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+  margin-bottom: 0.4rem;
+}
+
+.team-card small {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  line-height: 1.35;
+}
+
 /* ---------- Error state ---------- */
 .error-block {
   text-align: center;

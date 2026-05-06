@@ -26,11 +26,13 @@
       'nav-projeto': 'Projeto',
       'nav-cerca': 'Cerca do Javali',
       'nav-estufa': 'Estufa de Cogumelos',
+      'nav-quemsomos': 'Quem Somos',
       'footer-tagline': 'Projeto de extensao da',
       'footer-partners': 'Parcerias: Portal Sem Porteiras · Akarui · Apoena',
       'page-projeto': 'SEMEA-TEC — Projeto',
       'page-cerca': 'Cerca do Javali',
-      'page-estufa': 'Estufa de Cogumelos'
+      'page-estufa': 'Estufa de Cogumelos',
+      'page-quemsomos': 'Quem Somos'
     },
     en: {
       'title': 'SEMEA-TEC — Sowing Technological Solutions in Family Farming',
@@ -41,11 +43,13 @@
       'nav-projeto': 'Project',
       'nav-cerca': 'Wild Boar Fence',
       'nav-estufa': 'Mushroom Greenhouse',
+      'nav-quemsomos': 'Who We Are',
       'footer-tagline': 'An outreach project by',
       'footer-partners': 'Partners: Portal Sem Porteiras · Akarui · Apoena',
       'page-projeto': 'SEMEA-TEC — Project',
       'page-cerca': 'Wild Boar Fence',
-      'page-estufa': 'Mushroom Greenhouse'
+      'page-estufa': 'Mushroom Greenhouse',
+      'page-quemsomos': 'Who We Are'
     }
   };
 
@@ -197,7 +201,7 @@
     }
 
     // Validate page slug
-    var validPages = ['projeto', 'cerca-javali', 'estufa-cogumelos'];
+    var validPages = ['projeto', 'cerca-javali', 'estufa-cogumelos', 'quem-somos'];
     if (!page || validPages.indexOf(page) === -1) {
       page = 'projeto';
     }

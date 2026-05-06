@@ -1,27 +1,121 @@
 /**
- * SEMEA-TEC — Carregador de conteúdo Markdown
+ * SEMEA-TEC — Bilingual Markdown Content Loader
  *
- * Usa a biblioteca marked.js (CDN) para converter .md em HTML.
- * A navegação é feita por links com data-page="nome-do-arquivo".
- * O conteúdo é carregado da pasta /conteudo/nome-do-arquivo.md.
+ * Features:
+ *  - Portuguese (pt) and English (en) support
+ *  - Language saved to localStorage, persisted across sessions
+ *  - URL hash-based routing: #pt/projeto, #en/cerca-javali, etc.
+ *  - Falls back to browser language detection
  */
 
 (function () {
   'use strict';
 
-  const contentEl = document.getElementById('content');
-  const navLinks = document.querySelectorAll('.nav-link[data-page]');
+  var contentEl = document.getElementById('content');
+  var navLinks = document.querySelectorAll('.nav-link[data-page]');
+  var langBtns = document.querySelectorAll('.lang-btn');
 
-  // Mapeia slug -> título da página (fallback)
-  const pageTitles = {
-    'projeto': 'SEMEA-TEC — Projeto',
-    'cerca-javali': 'Cerca do Javali',
-    'estufa-cogumelos': 'Estufa de Cogumelos'
+  // ---- i18n translations for UI strings ----
+  var i18n = {
+    pt: {
+      'title': 'SEMEA-TEC — Semeando Soluções Tecnológicas na Agricultura Familiar',
+      'loading': 'Carregando...',
+      'error-title': 'Ops! Conteudo nao encontrado',
+      'error-text': 'Nao foi possivel carregar a pagina solicitada.',
+      'error-back': 'Voltar para o projeto',
+      'nav-projeto': 'Projeto',
+      'nav-cerca': 'Cerca do Javali',
+      'nav-estufa': 'Estufa de Cogumelos',
+      'footer-tagline': 'Projeto de extensao da',
+      'footer-partners': 'Parcerias: Portal Sem Porteiras · Akarui · Apoena',
+      'page-projeto': 'SEMEA-TEC — Projeto',
+      'page-cerca': 'Cerca do Javali',
+      'page-estufa': 'Estufa de Cogumelos'
+    },
+    en: {
+      'title': 'SEMEA-TEC — Sowing Technological Solutions in Family Farming',
+      'loading': 'Loading...',
+      'error-title': 'Oops! Content not found',
+      'error-text': 'Could not load the requested page.',
+      'error-back': 'Back to project page',
+      'nav-projeto': 'Project',
+      'nav-cerca': 'Wild Boar Fence',
+      'nav-estufa': 'Mushroom Greenhouse',
+      'footer-tagline': 'An outreach project by',
+      'footer-partners': 'Partners: Portal Sem Porteiras · Akarui · Apoena',
+      'page-projeto': 'SEMEA-TEC — Project',
+      'page-cerca': 'Wild Boar Fence',
+      'page-estufa': 'Mushroom Greenhouse'
+    }
   };
 
-  /**
-   * Atualiza o link ativo na navegação.
-   */
+  // ---- State ----
+  var currentLang = 'pt';
+  var currentPage = 'projeto';
+
+  // ---- Language helpers ----
+
+  function setLang(newLang) {
+    currentLang = newLang;
+    localStorage.setItem('semea-lang', newLang);
+    document.documentElement.lang = newLang === 'pt' ? 'pt-BR' : 'en';
+
+    // Update lang buttons
+    langBtns.forEach(function (btn) {
+      if (btn.getAttribute('data-lang') === newLang) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Translate UI strings on the page
+    translateUI();
+  }
+
+  function translateUI() {
+    var elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      var translation = i18n[currentLang][key];
+      if (translation) {
+        // Only replace raw text nodes, keep HTML structure when there are children
+        if (el.children.length === 0) {
+          el.textContent = translation;
+        } else {
+          // Walk child text nodes for elements like <p> with mixed content
+          walkTextNodes(el, function (node) {
+            node.textContent = translation;
+            return true; // stop after first match
+          });
+        }
+      }
+    });
+
+    // Update <title>
+    document.title = i18n[currentLang]['title'];
+
+    // Update meta description
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.content = currentLang === 'pt'
+        ? 'Projeto de extensao da UNIFESP que desenvolve tecnologias sociais de baixo custo com comunicacao LoRa e sensoriamento para a agricultura familiar.'
+        : 'UNIFESP outreach project developing low-cost social technologies with LoRa communication and sensing for family farming.';
+    }
+  }
+
+  function walkTextNodes(el, callback) {
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.textContent.trim() !== '') {
+        if (callback(node)) break;
+      }
+    }
+  }
+
+  // ---- Navigation ----
+
   function setActiveLink(slug) {
     navLinks.forEach(function (link) {
       var page = link.getAttribute('data-page');
@@ -34,99 +128,152 @@
   }
 
   /**
-   * Atualiza o <title> da página.
+   * Load and render a markdown file for the given language and page slug.
    */
-  function setPageTitle(slug) {
-    var title = pageTitles[slug] || 'SEMEA-TEC';
-    document.title = title + ' — Semeando Soluções Tecnológicas na Agricultura Familiar';
-  }
+  function loadPage(slug, lang) {
+    lang = lang || currentLang;
+    currentPage = slug;
 
-  /**
-   * Carrega e renderiza um arquivo markdown.
-   */
-  function loadPage(slug) {
-    contentEl.innerHTML = '<div class="loading">Carregando...</div>';
+    contentEl.innerHTML = '<div class="loading">' + i18n[lang]['loading'] + '</div>';
     setActiveLink(slug);
-    setPageTitle(slug);
 
-    var url = 'conteudo/' + slug + '.md';
+    var url = 'conteudo/' + lang + '/' + slug + '.md';
 
     fetch(url)
       .then(function (response) {
         if (!response.ok) {
-          throw new Error('Arquivo não encontrado (HTTP ' + response.status + ')');
+          throw new Error(i18n[lang]['error-text'] + ' (HTTP ' + response.status + ')');
         }
         return response.text();
       })
       .then(function (markdown) {
-        // Configura marked para abrir links externos em nova aba
-        marked.setOptions({
-          gfm: true,
-          breaks: false
-        });
-
-        var html = marked.parse(markdown);
-        contentEl.innerHTML = html;
+        marked.setOptions({ gfm: true, breaks: false });
+        contentEl.innerHTML = marked.parse(markdown);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch(function (error) {
         contentEl.innerHTML =
           '<div class="error-block">' +
-          '<h2>Ops! Conteúdo não encontrado</h2>' +
-          '<p>Não foi possível carregar a página solicitada.</p>' +
-          '<p><small>' + error.message + '</small></p>' +
-          '<p><a href="#" data-page="projeto">Voltar para o projeto</a></p>' +
+          '<h2>' + i18n[lang]['error-title'] + '</h2>' +
+          '<p>' + error.message + '</p>' +
+          '<p><a href="#" data-page="projeto" data-fallback="true">' + i18n[lang]['error-back'] + '</a></p>' +
           '</div>';
 
-        // Rebind the fallback link
-        var fallback = contentEl.querySelector('a[data-page]');
+        var fallback = contentEl.querySelector('a[data-fallback]');
         if (fallback) {
           fallback.addEventListener('click', function (e) {
             e.preventDefault();
-            var p = this.getAttribute('data-page');
-            loadPage(p);
-            history.pushState({ page: p }, '', '#' + p);
+            navigateTo('projeto', lang);
           });
         }
       });
   }
 
   /**
-   * Navegação via clique nos links.
+   * Navigate to a page in a given language, updating URL hash.
    */
+  function navigateTo(slug, lang) {
+    lang = lang || currentLang;
+    loadPage(slug, lang);
+    history.pushState({ page: slug, lang: lang }, '', '#' + lang + '/' + slug);
+  }
+
+  // ---- URL routing (hash-based) ----
+
+  function parseHash() {
+    var hash = window.location.hash.replace('#', '');
+    // Expected format: "pt/projeto" or "en/cerca-javali"
+    var parts = hash.split('/');
+    var lang = null;
+    var page = null;
+
+    if (parts.length >= 2 && (parts[0] === 'pt' || parts[0] === 'en')) {
+      lang = parts[0];
+      page = parts[1];
+    } else if (parts.length === 1 && (parts[0] === 'pt' || parts[0] === 'en')) {
+      // Just a language, default to project page
+      lang = parts[0];
+      page = 'projeto';
+    }
+
+    // Validate page slug
+    var validPages = ['projeto', 'cerca-javali', 'estufa-cogumelos'];
+    if (!page || validPages.indexOf(page) === -1) {
+      page = 'projeto';
+    }
+
+    return { lang: lang, page: page };
+  }
+
+  function getPageTitle(slug, lang) {
+    var key = 'page-' + slug;
+    return i18n[lang][key] || 'SEMEA-TEC';
+  }
+
+  // ---- Language persistence ----
+
+  function detectLanguage() {
+    // 1. localStorage
+    var saved = localStorage.getItem('semea-lang');
+    if (saved === 'pt' || saved === 'en') return saved;
+
+    // 2. Browser preference
+    var browserLang = (navigator.language || '').toLowerCase();
+    if (browserLang.startsWith('pt')) return 'pt';
+    if (browserLang.startsWith('en')) return 'en';
+
+    // 3. Default
+    return 'pt';
+  }
+
+  // ---- Event bindings ----
+
   navLinks.forEach(function (link) {
     link.addEventListener('click', function (e) {
       e.preventDefault();
       var page = this.getAttribute('data-page');
-      loadPage(page);
-      history.pushState({ page: page }, '', '#' + page);
+      navigateTo(page, currentLang);
     });
   });
 
-  /**
-   * Detecta a página a partir do hash da URL ou carrega a padrão.
-   */
-  function getPageFromHash() {
-    var hash = window.location.hash.replace('#', '');
-    // Verifica se é um slug válido
-    if (hash && pageTitles.hasOwnProperty(hash)) {
-      return hash;
-    }
-    return 'projeto'; // página padrão
-  }
-
-  // Carrega a página inicial
-  var initialPage = getPageFromHash();
-  loadPage(initialPage);
-  // Garante que o hash da URL reflita a página carregada
-  if (window.location.hash.replace('#', '') !== initialPage) {
-    history.replaceState({ page: initialPage }, '', '#' + initialPage);
-  }
-
-  // Navegação pelo botão voltar/avançar do navegador
-  window.addEventListener('popstate', function (e) {
-    var page = (e.state && e.state.page) ? e.state.page : getPageFromHash();
-    loadPage(page);
+  langBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var lang = this.getAttribute('data-lang');
+      if (lang !== currentLang) {
+        setLang(lang);
+        navigateTo(currentPage, lang);
+      }
+    });
   });
+
+  window.addEventListener('popstate', function (e) {
+    if (e.state && e.state.page && e.state.lang) {
+      setLang(e.state.lang);
+      loadPage(e.state.page, e.state.lang);
+    } else {
+      var parsed = parseHash();
+      setLang(parsed.lang);
+      loadPage(parsed.page, parsed.lang);
+    }
+  });
+
+  // ---- Initialize ----
+
+  var parsed = parseHash();
+  var initialLang = parsed.lang || detectLanguage();
+  var initialPage = parsed.page;
+
+  setLang(initialLang);
+  loadPage(initialPage, initialLang);
+
+  // Ensure hash reflects current state
+  var expectedHash = '#' + initialLang + '/' + initialPage;
+  if (window.location.hash !== expectedHash) {
+    history.replaceState(
+      { page: initialPage, lang: initialLang },
+      '',
+      expectedHash
+    );
+  }
 
 })();

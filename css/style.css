@@ -111,6 +111,44 @@ body {
   opacity: 0.75;
 }
 
+/* ---------- Language switch ---------- */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-left: 0.5rem;
+}
+
+.lang-btn {
+  background: none;
+  border: 1px solid transparent;
+  color: var(--green-100);
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.lang-btn:hover {
+  background: var(--green-700);
+  color: var(--white);
+}
+
+.lang-btn.active {
+  background: var(--earth-500);
+  color: var(--white);
+  border-color: var(--earth-300);
+}
+
+.lang-sep {
+  color: var(--green-300);
+  font-size: 0.8rem;
+  user-select: none;
+}
+
 /* ---------- Main ---------- */
 .site-main {
   flex: 1;
@@ -296,5 +334,10 @@ body {
   .site-nav {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .lang-switch {
+    margin-left: 0;
+    margin-top: 0.3rem;
   }
 }

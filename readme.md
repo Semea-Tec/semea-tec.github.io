@@ -1,72 +1,108 @@
-## O que foi criado
+# SEMEA-TEC · Site Institucional
 
-### Estrutura local
+**semea.tec.br** — Site do projeto de extensão da UNIFESP que desenvolve tecnologias sociais de baixo custo com comunicação LoRa e sensoriamento para a agricultura familiar.
 
-extensão/
-├── site-semea-tec/          ← repositório do site (já no GitHub)
-│   ├── index.html           ← página principal com renderizador markdown
-│   ├── CNAME                ← domínio semea.tec.br
-│   ├── css/style.css        ← tema verde/terra responsivo
-│   ├── js/main.js           ← carregador de .md via marked.js
-│   └── conteudo/
+---
+
+## Sobre o projeto
+
+O **SEMEA-TEC** atua na interseção entre computação, eletrônica e extensão rural, utilizando metodologias participativas (Action Design Research) para cocriar soluções com agricultores familiares. O projeto está vinculado ao ICT/UNIFESP — São José dos Campos e ao PPGIT/UNIFESP (doutorado em *Harvest Energy* e transmissores de baixa potência como tecnologia social).
+
+**Parcerias:** Portal Sem Porteiras · Akarui · Apoena
+
+---
+
+## Sobre o site
+
+Site estático, bilíngue (português/inglês), hospedado via **GitHub Pages** no domínio `semea.tec.br`.
+
+### Tecnologia
+
+- **HTML + CSS + JS** puro — sem frameworks, sem build
+- **[marked.js](https://github.com/markedjs/marked)** via CDN para renderizar `.md` em HTML no navegador
+- **Navegação SPA**: conteúdo carregado dinamicamente com `fetch()`, roteamento por hash (`#pt/projeto`, `#en/wild-boar-fence`), History API para voltar/avançar
+- **Detecção de idioma**: preferência salva em `localStorage`, fallback para idioma do navegador, padrão português
+- **Seletor PT | EN** no header com troca instantânea de conteúdo
+
+### Estrutura
+
+```
+├── index.html              # shell da aplicação (header, nav, footer)
+├── CNAME                   # semea.tec.br
+├── css/style.css           # tema verde/terra responsivo
+├── js/main.js              # carregador bilíngue de markdown + i18n + roteamento
+├── conteudo/
+│   ├── pt/                 # conteúdo em português
+│   │   ├── projeto.md
+│   │   ├── cerca-javali.md
+│   │   └── estufa-cogumelos.md
+│   └── en/                 # conteúdo em inglês
 │       ├── projeto.md
 │       ├── cerca-javali.md
 │       └── estufa-cogumelos.md
-├── greenhouse-monitoring/   ← clonado do GitHub
-└── resumo_para_evento_republica.md
+└── readme.md
+```
 
-### Repositórios no GitHub
+---
 
-┌─────────────┬────────────────────────────────────────────────────┐
-│ Repositório │ URL                                                │
-├─────────────┼────────────────────────────────────────────────────┤
-│ Site        │ https://github.com/Semea-Tec/semea-tec.github.io   │
-├─────────────┼────────────────────────────────────────────────────┤
-│ Estufa      │ https://github.com/Semea-Tec/greenhouse-monitoring │
-└─────────────┴────────────────────────────────────────────────────┘
+## Rodando localmente
 
-### Site
+Qualquer servidor HTTP estático serve. Exemplo com Python:
 
-• Tecnologia: HTML + CSS + JS puro, sem dependências de build. Usa marked.js via CDN para converter .md em HTML no navegador.
-• Navegação: 3 páginas de conteúdo — Projeto, Cerca do Javali, Estufa de Cogumelos. Os links carregam os .md dinamicamente via fetch(), com suporte a voltar/avançar do navegador (History API).
-• GitHub Pages: já habilitado no branch main, domínio customizado semea.tec.br configurado.
+```bash
+cd site-semea-tec
+python3 -m http.server 8080
+```
 
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Acesse `http://localhost:8080`.
 
+> O site precisa de internet para carregar o `marked.js` do CDN. Para uso offline, baixe a biblioteca para `js/vendor/`.
 
-## O que falta fazer (você)
+---
 
-### 1. Configurar DNS do domínio semea.tec.br
+## Adicionando novas páginas
 
-No painel de DNS da sua registradora, adicione estes registros:
+1. Crie o arquivo `.md` em `conteudo/pt/` e `conteudo/en/`:
 
-Tipo     Nome      Valor
-A        @         185.199.108.153
-A        @         185.199.109.153
-A        @         185.199.110.153
-A        @         185.199.111.153
-CNAME    www       semea-tec.github.io
+```bash
+touch conteudo/pt/oficinas.md
+touch conteudo/en/oficinas.md
+```
 
-São os IPs fixos do GitHub Pages. Depois que propagar (pode levar até 24h na primeira vez), o site estará em https://semea.tec.br.
+2. Adicione o link de navegação no `<nav>` do `index.html`:
 
-### 2. Habilitar HTTPS
+```html
+<a href="#" data-page="oficinas" data-i18n="nav-oficinas">Oficinas</a>
+```
 
-Assim que o domínio propagar, vá em:  
-https://github.com/Semea-Tec/semea-tec.github.io/settings/pages  
-e marque "Enforce HTTPS" — o GitHub gera o certificado SSL automaticamente via Let's Encrypt.
+3. Registre as traduções no objeto `i18n` em `js/main.js`:
 
-### 3. Como adicionar mais páginas
+```js
+'nav-oficinas': 'Oficinas',    // pt
+'nav-oficinas': 'Workshops',   // en
+```
 
-Basta criar um novo .md em site-semea-tec/conteudo/ e adicionar o link no <nav> do index.html com data-page="nome-do-arquivo". Exemplo:
+4. Commit e push:
 
-<a href="#" data-page="oficinas" class="nav-link">Oficinas</a>
+```bash
+git add -A && git commit -m "Nova página: oficinas" && git push
+```
 
-E criar o arquivo conteudo/oficinas.md. Depois é só commit e push.
+---
 
-### 4. Atualizar o site
+## Repositórios relacionados
 
-Sempre que editar algo:
+| Repositório | Descrição |
+|---|---|
+| [greenhouse-monitoring](https://github.com/Semea-Tec/greenhouse-monitoring) | Sensoriamento ambiental autônomo para estufas de cogumelos (LoRa + ESP32 + solar) |
 
-cd extensão/site-semea-tec
-git add -A && git commit -m "mensagem" && git push
+---
 
+## Licença
+
+Este site e seu conteúdo estão disponíveis sob a licença [MIT](LICENSE).
+
+---
+
+**SEMEA-TEC** · UNIFESP · ICT São José dos Campos  
+[semea.tec.br](https://semea.tec.br) · [github.com/Semea-Tec](https://github.com/Semea-Tec)

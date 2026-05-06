@@ -1,0 +1,300 @@
+/* =====================================================
+   SEMEA-TEC — Tema principal
+   Paleta: tons de verde, terra e branco
+   ===================================================== */
+
+:root {
+  --green-900: #1b3a2d;
+  --green-700: #2d5a3f;
+  --green-500: #4a8c5c;
+  --green-300: #7dbd8a;
+  --green-100: #d4edda;
+  --earth-500: #8b6914;
+  --earth-300: #c9a23c;
+  --earth-100: #fdf3d0;
+  --white:    #ffffff;
+  --gray-100: #f6f8f6;
+  --gray-200: #e8ece8;
+  --gray-500: #6b7b6d;
+  --gray-800: #2c332d;
+  --radius:   8px;
+  --shadow:   0 2px 12px rgba(0,0,0,0.07);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 17px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.7;
+  color: var(--gray-800);
+  background: var(--gray-100);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: var(--green-900);
+  color: var(--white);
+  padding: 0.9rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.site-header .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.logo {
+  text-decoration: none;
+  color: var(--white);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.logo-icon {
+  font-size: 1.4rem;
+}
+
+.logo-text strong {
+  color: var(--earth-300);
+}
+
+/* ---------- Navigation ---------- */
+.site-nav {
+  display: flex;
+  gap: 0.15rem;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: var(--green-100);
+  text-decoration: none;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: var(--green-700);
+  color: var(--white);
+}
+
+.nav-external {
+  opacity: 0.75;
+}
+
+/* ---------- Main ---------- */
+.site-main {
+  flex: 1;
+  padding: 2.5rem 0 4rem;
+}
+
+.markdown-body {
+  background: var(--white);
+  padding: 2.5rem 2.8rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Markdown content styles ---------- */
+.markdown-body h1 {
+  font-size: 2.1rem;
+  color: var(--green-900);
+  margin-bottom: 0.35rem;
+  line-height: 1.25;
+}
+
+.markdown-body h2 {
+  font-size: 1.45rem;
+  color: var(--green-700);
+  margin-top: 2.2rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--green-100);
+}
+
+.markdown-body h3 {
+  font-size: 1.15rem;
+  color: var(--earth-500);
+  margin-top: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.markdown-body p {
+  margin-bottom: 1.1rem;
+}
+
+.markdown-body a {
+  color: var(--green-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown-body a:hover {
+  color: var(--green-700);
+}
+
+.markdown-body ul, .markdown-body ol {
+  margin: 0.6rem 0 1.1rem 1.5rem;
+}
+
+.markdown-body li {
+  margin-bottom: 0.35rem;
+}
+
+.markdown-body strong {
+  color: var(--green-900);
+}
+
+.markdown-body blockquote {
+  border-left: 4px solid var(--green-300);
+  padding: 0.6rem 1.2rem;
+  margin: 1.2rem 0;
+  background: var(--green-100);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.markdown-body blockquote p {
+  margin: 0;
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--gray-200);
+  margin: 2rem 0;
+}
+
+.markdown-body code {
+  background: var(--gray-200);
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+}
+
+.markdown-body pre {
+  background: var(--green-900);
+  color: var(--green-100);
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1.2rem 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.markdown-body pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: var(--radius);
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+}
+
+.markdown-body th, .markdown-body td {
+  border: 1px solid var(--gray-200);
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+}
+
+.markdown-body th {
+  background: var(--green-100);
+  color: var(--green-900);
+}
+
+/* ---------- Loading ---------- */
+.loading {
+  text-align: center;
+  color: var(--gray-500);
+  padding: 3rem;
+  font-style: italic;
+}
+
+/* ---------- Error state ---------- */
+.error-block {
+  text-align: center;
+  padding: 2rem;
+  color: #c0392b;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--green-900);
+  color: var(--green-100);
+  text-align: center;
+  padding: 1.6rem 0;
+  font-size: 0.9rem;
+}
+
+.site-footer a {
+  color: var(--earth-300);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-small {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  margin-top: 0.4rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .markdown-body {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .markdown-body h1 {
+    font-size: 1.6rem;
+  }
+
+  .site-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .site-nav {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

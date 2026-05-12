@@ -533,19 +533,51 @@ html[data-splash="show"] .splash {
 }
 
 @media (max-width: 420px) {
-  :root { --header-h: 58px; }
+  :root { --header-h: 60px; }
   .lang-switch { padding: 2px; }
   .lang-btn { padding: 3px 9px; font-size: 0.72rem; }
-  .brand-mark { width: 40px; height: 40px; }
-  .brand-lockup { --lockup-w: 108px; }
-  .brand-slogan { display: none; } /* slogan too small to read at this width */
+  .site-header .brand-mark { width: 44px; height: 44px; }
   .icon-btn { width: 34px; height: 34px; }
 }
 
-/* On very narrow screens, hide the wordmark image — the mark alone is enough
-   to keep the header readable when there's a hamburger + lang + theme button. */
-@media (max-width: 480px) {
-  .brand-lockup { display: none; }
+/* Mobile header layout: keep mark + wordmark but hide the slogan to
+   reduce horizontal pressure when the hamburger, theme toggle and lang
+   switch are also competing for space. */
+@media (max-width: 860px) {
+  .site-header .brand-slogan { display: none; }
+  .site-header .brand-lockup { --lockup-w: 120px; }
+}
+
+/* On very narrow screens, hide the wordmark image too — the mark alone
+   keeps the brand recognizable when there's a hamburger + lang + theme button. */
+@media (max-width: 460px) {
+  .site-header .brand-lockup { display: none; }
+}
+
+/* Splash always shows the full lockup at any viewport width — it has
+   the whole screen to itself, so the responsive hiding rules that apply
+   to the header/footer should NOT apply here. These overrides win
+   because they target `.splash .brand-lockup` (higher specificity). */
+.splash .brand-lockup { display: inline-flex !important; }
+.splash .brand-slogan { display: block !important; }
+
+/* Splash logo scales down on phones so it fits comfortably on a narrow
+   viewport. Without this, the desktop clamp values (96-160px mark,
+   220-380px lockup) push the splash content off-screen on a 360px phone. */
+@media (max-width: 600px) {
+  .brand--splash {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  .brand--splash .brand-mark {
+    width: clamp(110px, 28vw, 140px);
+    height: clamp(110px, 28vw, 140px);
+  }
+  .brand--splash .brand-lockup {
+    --lockup-w: min(70vw, 260px);
+    align-items: center;
+  }
 }
 
 /* ---------- 7. Main + content card ---------- */

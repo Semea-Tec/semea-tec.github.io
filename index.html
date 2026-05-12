@@ -1,52 +1,124 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="title">SEMEA-TEC — Semeando Soluções Tecnológicas na Agricultura Familiar</title>
-  <meta name="description" content="Projeto de extensão da UNIFESP que desenvolve tecnologias sociais de baixo custo com comunicação LoRa e sensoriamento para a agricultura familiar.">
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FAFBF7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1714" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+
+  <title>SEMEA-tec</title>
+  <meta name="description" content="UNIFESP outreach project developing low-cost social technologies with LoRa communication and sensing for family farming.">
+
+  <!-- Favicon (real brand mark) -->
+  <link rel="icon" type="image/png" sizes="32x32"   href="assets/brand/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="180x180" href="assets/brand/favicon-180.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/favicon-180.png">
+
+  <!-- Preload the splash logo so it appears instantly on first paint -->
+  <link rel="preload" as="image" href="assets/brand/logo-full.png">
+
+  <!-- Set theme before render to avoid flash (default: dark) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('semea-theme');
+        if (t !== 'dark' && t !== 'light') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+        // Mark first visit so the splash CSS can decide whether to render
+        var seen = localStorage.getItem('semea-splash-seen');
+        if (!seen) document.documentElement.setAttribute('data-splash', 'show');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css?v=9">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
+  <!-- Splash screen (shown only on first visit; markup always present so CSS controls it) -->
+  <div id="splash" class="splash" aria-hidden="true">
+    <img src="assets/brand/logo-full.png" alt="SEMEA-tec — Seeding tech, growing autonomy" class="splash-logo">
+  </div>
+
+  <a href="#main" class="skip-link" data-i18n="skip">Skip to content</a>
+
   <header class="site-header">
     <div class="container">
-      <a href="/" class="logo">
-        <span class="logo-icon">&#9733;</span>
-        <span class="logo-text"><strong>SEMEA</strong>-TEC</span>
+      <a href="#en/projeto" class="brand" aria-label="SEMEA-tec — seeding tech, growing autonomy">
+        <img class="brand-mark" src="assets/brand/mark.png" alt="" aria-hidden="true">
+        <span class="brand-lockup">
+          <img class="brand-wordmark brand-wordmark-light" src="assets/brand/wordmark.png"      alt="SEMEA-tec">
+          <img class="brand-wordmark brand-wordmark-dark"  src="assets/brand/wordmark-dark.png" alt="" aria-hidden="true">
+          <img class="brand-slogan" src="assets/brand/slogan.png" alt="" aria-hidden="true">
+        </span>
       </a>
-      <nav class="site-nav" id="main-nav">
-        <a href="#" data-page="projeto" class="nav-link active" data-i18n="nav-projeto">Projeto</a>
-        <a href="#" data-page="cerca-javali" class="nav-link" data-i18n="nav-cerca">Cerca do Javali</a>
-        <a href="#" data-page="estufa-cogumelos" class="nav-link" data-i18n="nav-estufa">Estufa de Cogumelos</a>
-        <a href="#" data-page="quem-somos" class="nav-link" data-i18n="nav-quemsomos">Quem Somos</a>
-        <a href="https://github.com/Semea-Tec" target="_blank" rel="noopener" class="nav-link nav-external">GitHub &#8599;</a>
+
+      <nav class="nav-primary" id="primary-nav" aria-label="Primary">
+        <a href="#" data-page="projeto" class="nav-link active" data-i18n="nav-projeto">Project</a>
+        <a href="#" data-page="javalarm" class="nav-link" data-i18n="nav-javalarm">Javalarm</a>
+        <a href="#" data-page="shitakiometer" class="nav-link" data-i18n="nav-shitakiometer">Shitakiometer</a>
+        <a href="#" data-page="quem-somos" class="nav-link" data-i18n="nav-quemsomos">Who We Are</a>
+        <a href="https://github.com/Semea-Tec" target="_blank" rel="noopener" class="nav-link external">GitHub</a>
       </nav>
-      <div class="lang-switch">
-        <button class="lang-btn active" data-lang="pt" aria-label="Português">PT</button>
-        <span class="lang-sep">|</span>
-        <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" data-i18n-aria="theme" title="Theme">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <div class="lang-switch" data-active="en" role="group" aria-label="Language">
+          <span class="lang-pill" aria-hidden="true"></span>
+          <button class="lang-btn" data-lang="pt">PT</button>
+          <button class="lang-btn active" data-lang="en">EN</button>
+        </div>
       </div>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav" data-i18n-aria="menu" title="Menu">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
+    <div class="nav-backdrop" aria-hidden="true"></div>
   </header>
 
-  <main class="site-main">
+  <main class="site-main" id="main">
     <div class="container">
-      <div id="content" class="markdown-body">
-        <div class="loading" data-i18n="loading">Carregando...</div>
-      </div>
+      <article class="content-card">
+        <div id="content" class="markdown-body" aria-live="polite" aria-busy="true">
+          <div class="loading-skel" aria-hidden="true">
+            <div></div><div></div><div></div><div></div><div></div>
+          </div>
+          <span class="sr-only" data-i18n="loading">Loading...</span>
+        </div>
+      </article>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p><strong>SEMEA-TEC</strong> — <span data-i18n="footer-tagline">Projeto de extensão da</span> <a href="https://www.unifesp.br" target="_blank" rel="noopener">UNIFESP</a> · ICT São José dos Campos</p>
-      <p data-i18n="footer-partners">Parcerias: Portal Sem Porteiras · Akarui · Apoena</p>
-      <p class="footer-small">semea.tec.br · <a href="https://github.com/Semea-Tec" target="_blank" rel="noopener">github.com/Semea-Tec</a></p>
+      <div class="footer-brand">
+        <a href="#en/projeto" class="brand" aria-label="SEMEA-tec — seeding tech, growing autonomy">
+          <img class="brand-mark" src="assets/brand/mark.png" alt="" aria-hidden="true">
+          <span class="brand-lockup">
+            <img class="brand-wordmark brand-wordmark-light" src="assets/brand/wordmark.png"      alt="SEMEA-tec">
+            <img class="brand-wordmark brand-wordmark-dark"  src="assets/brand/wordmark-dark.png" alt="" aria-hidden="true">
+            <img class="brand-slogan" src="assets/brand/slogan.png" alt="" aria-hidden="true">
+          </span>
+        </a>
+      </div>
+      <p><span data-i18n="footer-tagline">An outreach project by</span> <a href="https://www.unifesp.br" target="_blank" rel="noopener">UNIFESP</a> · ICT São José dos Campos</p>
+      <p data-i18n="footer-partners">Partners: Portal Sem Porteiras · Akarui · Apoena</p>
+      <p class="footer-meta">semea.tec.br · <a href="https://github.com/Semea-Tec" target="_blank" rel="noopener">github.com/Semea-Tec</a></p>
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=8"></script>
 </body>
 </html>

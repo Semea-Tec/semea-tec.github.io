@@ -1,4 +1,4 @@
-# Cerca do Javali — Monitoramento de Tensão via LoRa
+# Javalarm — Monitoramento de Tensão via LoRa
 
 ## Contexto
 
@@ -45,4 +45,4 @@ O enlace é do tipo **ponto-a-ponto simplex com confirmação**, priorizando con
 
 ---
 
-> Este é o MVP (*Minimum Viable Product*) da primeira rodada do projeto. Os aprendizados em campo alimentam diretamente o design da segunda rodada (estufa de cogumelos) e contribuem para a pesquisa de doutorado associada.
+> Este é o MVP (*Minimum Viable Product*) da primeira rodada do projeto. Os aprendizados em campo alimentam diretamente o design da segunda rodada (Shitakiometer) e contribuem para a pesquisa de doutorado associada.

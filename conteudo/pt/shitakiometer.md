@@ -1,4 +1,4 @@
-# Estufa de Cogumelos — Sensoriamento Ambiental Autônomo
+# Shitakiometer — Sensoriamento Ambiental Autônomo
 
 ## Contexto
 

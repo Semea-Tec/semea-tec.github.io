@@ -1,4 +1,4 @@
-# SEMEA-TEC: Semeando Soluções Tecnológicas na Agricultura Familiar
+# SEMEA-tec: semeando tecnologia, colhendo autonomia
 
 ## Sobre o projeto
 
@@ -12,16 +12,27 @@ Adotamos o **Action Design Research (ADR)** como metodologia central: antes de q
 
 Nossa fundamentação teórica ancora-se nas **Epistemologias do Sul** (Boaventura de Sousa Santos), na **Tecnologia Social** (Dagnino, Thomas) e no compromisso com uma transição ecológica justa, alinhando o trabalho aos ODS 1, 4, 7, 9 e 13. Utilizamos também o *framework* metodológico de Pozzebon e Diniz (2012) para TICs em contextos comunitários, que prevê abordagem multinível, pluralista e remixável.
 
-## Duas rodadas já realizadas
+## Rodadas do projeto
 
-O projeto já passou por dois ciclos completos de desenvolvimento:
+O projeto já passou por dois ciclos completos de desenvolvimento. Clique em uma rodada para conhecer os detalhes técnicos:
 
-| Rodada | Foco | Status |
-|--------|------|--------|
-| 1 | Cerca do Javali — monitoramento de tensão via LoRa | MVP validado |
-| 2 | Estufa de Cogumelos — sensoriamento ambiental autônomo | Em desenvolvimento |
+<div class="project-grid">
 
-Navegue pelas páginas específicas para conhecer os detalhes técnicos de cada rodada.
+<a href="#" data-page="javalarm" class="project-card">
+  <span class="project-card-arrow" aria-hidden="true">→</span>
+  <div class="project-card-tag">Rodada 01 · MVP validado</div>
+  <h3>Javalarm</h3>
+  <p>Monitoramento remoto de tensão em cercas elétricas via rádio LoRa, protegendo a agricultura familiar contra invasões de javalis no Vale do Paraíba.</p>
+</a>
+
+<a href="#" data-page="shitakiometer" class="project-card">
+  <span class="project-card-arrow" aria-hidden="true">→</span>
+  <div class="project-card-tag">Rodada 02 · Em desenvolvimento</div>
+  <h3>Shitakiometer</h3>
+  <p>Estação de sensoriamento ambiental autônoma com alimentação solar, comunicação LoRa de longo alcance e backend MQTT + InfluxDB + Grafana.</p>
+</a>
+
+</div>
 
 ## Parcerias
 

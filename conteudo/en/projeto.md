@@ -1,4 +1,4 @@
-# SEMEA-TEC: Sowing Technological Solutions in Family Farming
+# SEMEA-tec: seeding tech, growing autonomy
 
 ## About the project
 
@@ -10,18 +10,29 @@ The project is organically linked to an ongoing doctoral research at PPGIT/UNIFE
 
 We adopt **Action Design Research (ADR)** as our central methodology: before writing a single line of code or soldering anything, we go to the field with our partner organizations for **active listening and participatory diagnosis** of real needs. Only then do we move to co-creating prototypes, field-testing on farms, and iterative improvement cycles. Family farmers are at the center of the debate — not as passive beneficiaries, but as co-producers of technological innovation.
 
-Our theoretical foundation is anchored in the **Epistemologies of the South** (Boaventura de Sousa Santos), **Social Technology** (Dagnino, Thomas), and a commitment to a just ecological transition, aligning our work with SDGs 1, 4,7,9, and13. We also use the methodological framework of Pozzebon and Diniz (2012) for ICT in community contexts, which provides a multilevel, pluralistic, and remixable approach.
+Our theoretical foundation is anchored in the **Epistemologies of the South** (Boaventura de Sousa Santos), **Social Technology** (Dagnino, Thomas), and a commitment to a just ecological transition, aligning our work with SDGs 1, 4, 7, 9, and 13. We also use the methodological framework of Pozzebon and Diniz (2012) for ICT in community contexts, which provides a multilevel, pluralistic, and remixable approach.
 
-## Two completed rounds
+## Project rounds
 
-The project has already gone through two full development cycles:
+The project has already gone through two full development cycles. Click a round to explore the technical details:
 
-| Round | Focus | Status |
-|-------|-------|--------|
-| 1 | Wild Boar Fence — voltage monitoring via LoRa | MVP validated |
-| 2 | Mushroom Greenhouse — autonomous environmental sensing | Under development |
+<div class="project-grid">
 
-Browse the specific pages to learn the technical details of each round.
+<a href="#" data-page="javalarm" class="project-card">
+  <span class="project-card-arrow" aria-hidden="true">→</span>
+  <div class="project-card-tag">Round 01 · MVP validated</div>
+  <h3>Javalarm</h3>
+  <p>Remote monitoring of electric fence voltage via LoRa radio, protecting family farms in the Paraíba Valley from wild boar invasions.</p>
+</a>
+
+<a href="#" data-page="shitakiometer" class="project-card">
+  <span class="project-card-arrow" aria-hidden="true">→</span>
+  <div class="project-card-tag">Round 02 · Under development</div>
+  <h3>Shitakiometer</h3>
+  <p>Autonomous, solar-powered environmental sensing station with long-range LoRa communication and an MQTT + InfluxDB + Grafana backend.</p>
+</a>
+
+</div>
 
 ## Partnerships
 

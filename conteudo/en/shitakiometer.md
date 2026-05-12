@@ -1,4 +1,4 @@
-# Mushroom Greenhouse — Autonomous Environmental Sensing
+# Shitakiometer — Autonomous Environmental Sensing
 
 ## Context
 

@@ -1,4 +1,4 @@
-# Wild Boar Fence — Voltage Monitoring via LoRa
+# Javalarm — Voltage Monitoring via LoRa
 
 ## Context
 
@@ -45,4 +45,4 @@ The link is a **point-to-point simplex with acknowledgment**, prioritizing relia
 
 ---
 
-> This is the MVP (*Minimum Viable Product*) from the first project round. Field learnings directly feed the design of the second round (mushroom greenhouse) and contribute to the associated doctoral research.
+> This is the MVP (*Minimum Viable Product*) from the first project round. Field learnings directly feed the design of the second round (Shitakiometer) and contribute to the associated doctoral research.

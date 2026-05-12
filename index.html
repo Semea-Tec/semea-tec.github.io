@@ -15,8 +15,9 @@
   <link rel="icon" type="image/png" sizes="180x180" href="assets/brand/favicon-180.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/favicon-180.png">
 
-  <!-- Preload the splash logo so it appears instantly on first paint -->
-  <link rel="preload" as="image" href="assets/brand/logo-full.png">
+  <!-- Preload splash assets so they appear instantly on first paint -->
+  <link rel="preload" as="image" href="assets/brand/mark.png">
+  <link rel="preload" as="image" href="assets/brand/wordmark-dark.png">
 
   <!-- Set theme before render to avoid flash (default: dark) -->
   <script>
@@ -38,14 +39,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
   <!-- Splash screen (shown only on first visit; markup always present so CSS controls it) -->
   <div id="splash" class="splash" aria-hidden="true">
-    <img src="assets/brand/logo-full.png" alt="SEMEA-tec — Seeding tech, growing autonomy" class="splash-logo">
+    <div class="brand brand--splash" aria-label="SEMEA-tec — seeding tech, growing autonomy">
+      <img class="brand-mark" src="assets/brand/mark.png" alt="" aria-hidden="true">
+      <span class="brand-lockup">
+        <img class="brand-wordmark brand-wordmark-light" src="assets/brand/wordmark.png"      alt="SEMEA-tec">
+        <img class="brand-wordmark brand-wordmark-dark"  src="assets/brand/wordmark-dark.png" alt="" aria-hidden="true">
+        <img class="brand-slogan" src="assets/brand/slogan.png" alt="" aria-hidden="true">
+      </span>
+    </div>
   </div>
 
   <a href="#main" class="skip-link" data-i18n="skip">Skip to content</a>

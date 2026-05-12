@@ -39,7 +39,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/style.css?v=12">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -75,10 +75,27 @@
         <a href="#" data-page="shitakiometer" class="nav-link" data-i18n="nav-shitakiometer">Shitakiometer</a>
         <a href="#" data-page="quem-somos" class="nav-link" data-i18n="nav-quemsomos">Who We Are</a>
         <a href="https://github.com/Semea-Tec" target="_blank" rel="noopener" class="nav-link external">GitHub</a>
+
+        <!-- Drawer-only controls: mirror the header-actions theme toggle
+             and lang switch so they're reachable when the menu opens on
+             mobile. The header-actions versions are hidden in the same
+             breakpoint via CSS, so users see them in exactly one place
+             depending on viewport. -->
+        <div class="drawer-actions">
+          <button class="icon-btn theme-toggle" aria-label="Toggle theme" data-i18n-aria="theme" title="Theme">
+            <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </button>
+          <div class="lang-switch" data-active="en" role="group" aria-label="Language">
+            <span class="lang-pill" aria-hidden="true"></span>
+            <button class="lang-btn" data-lang="pt">PT</button>
+            <button class="lang-btn active" data-lang="en">EN</button>
+          </div>
+        </div>
       </nav>
 
       <div class="header-actions">
-        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme" data-i18n-aria="theme" title="Theme">
+        <button class="icon-btn theme-toggle" aria-label="Toggle theme" data-i18n-aria="theme" title="Theme">
           <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg class="sun"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
         </button>
@@ -127,6 +144,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js?v=8"></script>
+  <script src="js/main.js?v=9"></script>
 </body>
 </html>

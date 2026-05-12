@@ -55,14 +55,14 @@
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   // ---- DOM refs ----
-  var contentEl   = document.getElementById('content');
-  var navLinks    = document.querySelectorAll('.nav-link[data-page]');
-  var langBtns    = document.querySelectorAll('.lang-btn');
-  var langSwitch  = document.querySelector('.lang-switch');
-  var themeBtn    = document.getElementById('theme-toggle');
-  var menuToggle  = document.getElementById('menu-toggle');
-  var navBackdrop = document.querySelector('.nav-backdrop');
-  var navPrimary  = document.getElementById('primary-nav');
+  var contentEl     = document.getElementById('content');
+  var navLinks      = document.querySelectorAll('.nav-link[data-page]');
+  var langBtns      = document.querySelectorAll('.lang-btn');           // both header + drawer copies
+  var langSwitches  = document.querySelectorAll('.lang-switch');        // both copies
+  var themeBtns     = document.querySelectorAll('.theme-toggle');       // both copies
+  var menuToggle    = document.getElementById('menu-toggle');
+  var navBackdrop   = document.querySelector('.nav-backdrop');
+  var navPrimary    = document.getElementById('primary-nav');
 
   // ---- i18n strings ----
   var i18n = {
@@ -157,9 +157,11 @@
     document.documentElement.setAttribute('data-theme', theme);
     try { localStorage.setItem('semea-theme', theme); } catch (e) {}
   }
-  if (themeBtn) {
-    themeBtn.addEventListener('click', function () {
-      setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+  if (themeBtns.length) {
+    themeBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+      });
     });
   }
 
@@ -174,7 +176,8 @@
     langBtns.forEach(function (btn) {
       btn.classList.toggle('active', btn.getAttribute('data-lang') === newLang);
     });
-    if (langSwitch) langSwitch.setAttribute('data-active', newLang);
+    // Both .lang-switch instances (header + drawer) get their data-active synced
+    langSwitches.forEach(function (sw) { sw.setAttribute('data-active', newLang); });
 
     translateUI();
   }

@@ -445,11 +445,36 @@ html[data-splash="show"] .splash {
 [data-theme="dark"] .lang-btn.active { color: var(--text-on-lime); }
 .lang-switch[data-active="en"] .lang-pill { transform: translateX(100%); }
 
+/* Drawer actions: a duplicate of the header-actions (theme + lang)
+   that lives inside the mobile drawer. Hidden on desktop; shown only
+   when the drawer is rendered (≤860px). Keeps the header itself free
+   of clutter so the brand wordmark has room to breathe on phones. */
+.drawer-actions { display: none; }
+
 .menu-toggle { display: none; }
 .nav-backdrop { display: none; }
 
 /* ---------- 6. Mobile nav (≤860) ---------- */
 @media (max-width: 860px) {
+  /* Hide the desktop header controls — they move into the drawer. */
+  .site-header .header-actions { display: none; }
+
+  /* Show the drawer controls, stacked at the bottom of the drawer
+     panel with a separator above. */
+  .drawer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;             /* push to bottom of the scrollable nav */
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .drawer-actions .icon-btn {
+    width: 40px; height: 40px;
+    color: var(--text);
+  }
+  .drawer-actions .icon-btn svg { width: 20px; height: 20px; }
   .menu-toggle {
     display: inline-flex;
     margin-left: 0.25rem;
@@ -534,24 +559,26 @@ html[data-splash="show"] .splash {
 
 @media (max-width: 420px) {
   :root { --header-h: 60px; }
-  .lang-switch { padding: 2px; }
-  .lang-btn { padding: 3px 9px; font-size: 0.72rem; }
   .site-header .brand-mark { width: 44px; height: 44px; }
-  .icon-btn { width: 34px; height: 34px; }
+  .site-header .container { gap: 0.6rem; padding-inline: 0.85rem; }
+  .menu-toggle { width: 38px !important; height: 38px !important; }
 }
 
-/* Mobile header layout: keep mark + wordmark but hide the slogan to
-   reduce horizontal pressure when the hamburger, theme toggle and lang
-   switch are also competing for space. */
+/* Mobile header layout: with the theme/lang controls now in the drawer,
+   the header only carries brand + hamburger. Plenty of room for the
+   wordmark always; the slogan stays hidden because at this scale it's
+   too small to read anyway. */
 @media (max-width: 860px) {
+  .site-header .brand { margin-right: auto; }
+  .menu-toggle { margin-left: 0; }
   .site-header .brand-slogan { display: none; }
-  .site-header .brand-lockup { --lockup-w: 120px; }
+  .site-header .brand-lockup { --lockup-w: 130px; }
 }
 
-/* On very narrow screens, hide the wordmark image too — the mark alone
-   keeps the brand recognizable when there's a hamburger + lang + theme button. */
-@media (max-width: 460px) {
-  .site-header .brand-lockup { display: none; }
+/* On narrow phones (≤400px), shrink the wordmark slightly but keep it
+   readable. The lockup never hides now — only the slogan stays out. */
+@media (max-width: 400px) {
+  .site-header .brand-lockup { --lockup-w: 110px; }
 }
 
 /* Splash always shows the full lockup at any viewport width — it has
